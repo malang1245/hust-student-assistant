@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { D, LANGS, LANG_NAMES, LangCtx, translate } from './i18n'
-import { loadData, saveData } from './store'
-import { uid } from './utils'
+import { LANGS, LANG_NAMES, LangCtx, translate } from './i18n'
+import { api, getToken, setToken } from './api'
+import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
 import Timetable from './components/Timetable'
 import Tasks from './components/Tasks'
@@ -26,55 +26,99 @@ const initialLang = () => {
 
 export default function App() {
   const [li, setLi] = useState(initialLang)
-  const [data, setData] = useState(loadData)
+  const [user, setUser] = useState(null)
+  const [data, setData] = useState(null)
+  const [booting, setBooting] = useState(!!getToken())
+  const [bootErr, setBootErr] = useState('')
   const [tab, setTab] = useState('home')
   const t = (k, n) => translate(li, k, n)
 
-  useEffect(() => saveData(data), [data])
   useEffect(() => {
     document.documentElement.lang = LANGS[li]
     try { localStorage.setItem('hust-lang', LANGS[li]) } catch {}
   }, [li])
 
+  // Mở lại trang: nếu còn token thì tự đăng nhập
+  useEffect(() => {
+    if (!getToken()) return
+    api.me()
+      .then((r) => { setUser(r.user); return api.data() })
+      .then(setData)
+      .catch((e) => {
+        if (e.status === 401) setToken(null)
+        else setBootErr(e.code || 'errGeneric')
+      })
+      .finally(() => setBooting(false))
+  }, [])
+
+  const logout = () => {
+    setToken(null)
+    setUser(null)
+    setData(null)
+    setTab('home')
+  }
+
+  const onAuth = async (res) => {
+    setToken(res.token)
+    setData(await api.data())
+    setUser(res.user)
+  }
+
+  // Gọi API rồi tải lại dữ liệu; lỗi 401 thì đăng xuất
+  const run = async (fn) => {
+    try {
+      await fn()
+      setData(await api.data())
+    } catch (e) {
+      if (e.status === 401) logout()
+      else alert(t(e.code || 'errGeneric'))
+    }
+  }
   const actions = {
-    add: (kind, item) => setData((d) => ({ ...d, [kind]: [...d[kind], { id: uid(), ...item }] })),
-    remove: (kind, id) =>
-      setData((d) => {
-        const next = { ...d, [kind]: d[kind].filter((x) => x.id !== id) }
-        if (kind === 'courses') // xóa môn thì xóa luôn dữ liệu liên quan
-          ['sessions', 'tasks', 'exams'].forEach((k) => (next[k] = next[k].filter((x) => x.course !== id)))
-        return next
-      }),
-    update: (kind, id, patch) =>
-      setData((d) => ({ ...d, [kind]: d[kind].map((x) => (x.id === id ? { ...x, ...patch } : x)) })),
-    toggle: (id) =>
-      setData((d) => ({ ...d, tasks: d.tasks.map((x) => (x.id === id ? { ...x, done: !x.done } : x)) })),
+    add: (kind, item) => run(() => api.add(kind, item)),
+    update: (kind, id, patch) => run(() => api.update(kind, id, patch)),
+    remove: (kind, id) => run(() => api.remove(kind, id)),
+    toggle: (id) => run(() => api.toggle(id)),
   }
 
   const View = TABS.find((x) => x[0] === tab)[2]
+  const ready = user && data
 
   return (
     <LangCtx.Provider value={li}>
       <header>
         <div className="top">
           <h1>HUST Student Assistant</h1>
-          <label className="lg">
-            <span>{t('lang')}</span>
-            <select value={LANGS[li]} onChange={(e) => setLi(LANGS.indexOf(e.target.value))}>
-              {LANGS.map((l) => <option key={l} value={l}>{LANG_NAMES[l]}</option>)}
-            </select>
-          </label>
+          <div className="tools">
+            <label className="lg">
+              <span>{t('lang')}</span>
+              <select value={LANGS[li]} onChange={(e) => setLi(LANGS.indexOf(e.target.value))}>
+                {LANGS.map((l) => <option key={l} value={l}>{LANG_NAMES[l]}</option>)}
+              </select>
+            </label>
+            {ready && <button className="btn ghost" onClick={logout}>{t('logout')}</button>}
+          </div>
         </div>
         <p>{t('sub')}</p>
       </header>
-      <nav>
-        {TABS.map(([k, label]) => (
-          <button key={k} className={k === tab ? 'on' : ''} onClick={() => setTab(k)}>{t(label)}</button>
-        ))}
-      </nav>
-      <main>
-        <View data={data} actions={actions} />
-      </main>
+      {booting ? (
+        <main><p className="empty">{t('loading')}</p></main>
+      ) : bootErr ? (
+        <main><div className="card"><p className="err">{t(bootErr)}</p></div></main>
+      ) : !ready ? (
+        <main><Auth onAuth={onAuth} /></main>
+      ) : (
+        <>
+          <nav>
+            {TABS.map(([k, label]) => (
+              <button key={k} className={k === tab ? 'on' : ''} onClick={() => setTab(k)}>{t(label)}</button>
+            ))}
+          </nav>
+          <main>
+            <View data={data} actions={actions} />
+          </main>
+        </>
+      )}
     </LangCtx.Provider>
   )
 }

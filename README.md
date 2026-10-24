@@ -1,20 +1,24 @@
-# HUST Student Assistant (React + Vite)
+# HUST Student Assistant (React + Node.js + MySQL)
 
-## Run the project
+## 1. Backend (thư mục `server/`)
+```
+cd server
+npm install
+copy .env.example .env      (Windows)   # rồi mở .env, điền DB_PASSWORD và JWT_SECRET
+npm run setup               # tạo database + 6 bảng (chỉ chạy một lần)
+npm run dev                 # chạy backend tại http://localhost:4000
+```
+
+## 2. Frontend (thư mục gốc)
+Mở một terminal khác:
 ```
 npm install
 npm run dev
 ```
- http://localhost:5173
+Mở http://localhost:5173, đăng ký tài khoản rồi dùng.
 
-## Structure
-
-src/App.jsx – Global state, tab bar, language selection
-
-src/components/ – Dashboard, Timetable, Tasks, Exams, Courses (+ shared common.jsx)
-
-src/i18n.js – All Vietnamese / English / Khmer strings. Add new strings here
-
-src/store.js – Data reading/writing (currently using localStorage). Replace with API calls when Express + MySQL backend is available
-
-src/utils.js – Date functions, colors, utility functions
+## Cấu trúc
+- `src/` – giao diện React (App, components, i18n Việt/Anh/Khmer, api.js gọi backend)
+- `server/index.js` – REST API (Express, JWT, bcrypt)
+- `server/schema.sql` – thiết kế 6 bảng: users, courses, schedules, assignments, exams, notifications
+- `server/setup.js` – tạo database từ schema.sql
