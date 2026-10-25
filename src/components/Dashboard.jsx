@@ -33,7 +33,7 @@ export default function Dashboard({ data, actions }) {
             HUST STUDENT ASSISTANT
           </span>
           <h2>{t('todayT')}</h2>
-          <p>Quản lý việc học của bạn một cách hiệu quả.</p>
+          {t('sub')}
         </div>
       </section>
 
