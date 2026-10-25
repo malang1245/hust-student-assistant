@@ -408,3 +408,103 @@ nav{padding-left:max(12px,calc((100% - 1040px)/2 + 16px));padding-right:12px}
 .tools{order:1;margin-left:auto}
 .top h1{order:2;flex:1 1 100%;text-align:center;font-size:28px}
 header p{text-align:center;margin-top:4px}
+
+
+/* ===== GIAO DIỆN MÀU SẮC MỚI ===== */
+:root{
+  --bg:#eefaf7; --card:#ffffff; --tx:#10302b; --mut:#587771; --bd:#d6ebe6;
+  --pri:#0d9488; --onp:#ffffff; --soft:#d8f5ef;
+  --g1:#0d9488; --g2:#06b6d4; --g3:#7c3aed;   /* 3 màu chuyển sắc của banner */
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1716; --card:#12231f; --tx:#e5f4f0; --mut:#8fb0aa; --bd:#223b36;
+    --pri:#2dd4bf; --onp:#04211d; --soft:#14403a;
+  }
+}
+
+/* Nền nhiều màu */
+body{
+  color:var(--tx);
+  background:
+    radial-gradient(800px 420px at 105% -8%, rgba(139,92,246,.20), transparent 60%),
+    radial-gradient(700px 400px at -10% 8%, rgba(20,184,166,.24), transparent 60%),
+    radial-gradient(800px 500px at 50% 115%, rgba(244,63,94,.12), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+::selection{background:var(--pri);color:var(--onp)}
+
+/* Banner đầu trang chuyển sắc */
+header{
+  position:relative; overflow:hidden; color:#fff;
+  width:min(1040px,calc(100% - 24px)); max-width:none;
+  margin:18px auto 8px; padding:22px 26px; border-radius:24px;
+  background:linear-gradient(120deg,var(--g1),var(--g2) 55%,var(--g3));
+  box-shadow:0 12px 30px color-mix(in srgb,var(--g1) 30%,transparent);
+}
+header::after{content:"";position:absolute;right:-40px;top:-70px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.15);pointer-events:none}
+header h1{color:#fff}
+header p{color:rgba(255,255,255,.92)}
+.lg span{color:rgba(255,255,255,.92)}
+.lg select{background:rgba(255,255,255,.96);color:#10302b;border:0}
+
+/* Thanh tab */
+nav{
+  background:color-mix(in srgb,var(--card) 82%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--bd);
+}
+nav button{border-radius:12px}
+nav button.on{
+  color:var(--onp);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--pri) 70%,#fff),var(--pri));
+  box-shadow:0 6px 14px color-mix(in srgb,var(--pri) 35%,transparent);
+}
+
+/* Thẻ bo tròn, có bóng nhẹ */
+.card,.stat-card,.dashboard-panel{
+  background:var(--card); border:1px solid var(--bd); border-radius:20px;
+  box-shadow:0 8px 24px color-mix(in srgb,var(--pri) 9%,transparent);
+}
+
+/* Ô thống kê mỗi ô một màu */
+.stats>*{--a:#0d9488}
+.stats>:nth-child(2){--a:#f59e0b}
+.stats>:nth-child(3){--a:#8b5cf6}
+.stats>:nth-child(4){--a:#f43f5e}
+.stats .stat-card{
+  background:color-mix(in srgb,var(--a) 13%,var(--card));
+  border-color:color-mix(in srgb,var(--a) 28%,var(--bd));
+}
+.stats .stat-card .stat-icon{
+  background:color-mix(in srgb,var(--a) 24%,var(--card));
+  box-shadow:0 6px 12px color-mix(in srgb,var(--a) 30%,transparent);
+}
+.stats .stat-card .stat-value{color:var(--a)}
+
+/* Viền màu phía trên 3 thẻ danh sách */
+.two>:nth-child(1),.dashboard-sections>:nth-child(1){border-top:4px solid #0d9488}
+.two>:nth-child(2),.dashboard-sections>:nth-child(2){border-top:4px solid #f59e0b}
+.two>:nth-child(3),.dashboard-sections>:nth-child(3){border-top:4px solid #8b5cf6}
+.dashboard-eyebrow{color:var(--pri)}
+
+/* Nút bấm chuyển sắc */
+.btn{
+  color:var(--onp); border-radius:12px; font-weight:700;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--pri) 70%,#fff),var(--pri));
+  box-shadow:0 6px 16px color-mix(in srgb,var(--pri) 32%,transparent);
+  transition:transform .12s, filter .12s;
+}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:none;color:var(--tx);box-shadow:none;border:1.5px solid var(--bd)}
+.tools .btn.ghost{color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.65)}
+
+/* Ô nhập, nhãn, thời khóa biểu */
+input,select{border:1.5px solid var(--bd);border-radius:12px;background:var(--bg);color:var(--tx)}
+input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 4px color-mix(in srgb,var(--pri) 18%,transparent);outline:none}
+.chip{color:var(--c);border-color:transparent;font-weight:800;background:color-mix(in srgb,var(--c) 15%,transparent)}
+.col{border-radius:16px}
+.col.today{border:2px solid var(--pri);background:color-mix(in srgb,var(--pri) 10%,var(--card))}
+.sess{border-radius:10px;background:color-mix(in srgb,var(--c) 12%,var(--card))}
+.auth{box-shadow:0 20px 50px color-mix(in srgb,var(--pri) 20%,transparent)}
