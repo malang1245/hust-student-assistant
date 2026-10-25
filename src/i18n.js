@@ -37,3 +37,40 @@ export const useT = () => {
   const li = useContext(LangCtx)
   return (k, n) => translate(li, k, n)
 }
+
+
+// ===== Đổi chữ để dùng cho cả việc học và việc cá nhân =====
+Object.assign(D, {
+  sub: ['Quản lý lịch học, công việc và mọi kế hoạch của riêng bạn.', 'Manage your classes, tasks and plans in one place.', 'គ្រប់គ្រងម៉ោងសិក្សា កិច្ចការ និងផែនការរបស់អ្នកនៅកន្លែងតែមួយ។'],
+
+  // Tổng quan: "Hôm nay"
+  todayT: ['Hôm nay', 'Today', 'ថ្ងៃនេះ'],
+  sToday: ['lịch hôm nay', 'events today', 'កាលវិភាគថ្ងៃនេះ'],
+  noClass: ['Hôm nay chưa có lịch nào.', 'Nothing scheduled today.', 'ថ្ងៃនេះមិនទាន់មានកាលវិភាគទេ។'],
+
+  // "Phòng" thành "Địa điểm"
+  room: ['Địa điểm', 'Location', 'ទីកន្លែង'],
+
+  // Lịch tuần
+  addS: ['Thêm lịch', 'Add an event', 'បន្ថែមកាលវិភាគ'],
+
+  // Môn học thành "Môn / hoạt động" (nhập tự do: Đi chơi, Hẹn hò, Tập gym...)
+  course: ['Môn / hoạt động', 'Course / activity', 'មុខវិជ្ជា / សកម្មភាព'],
+  tCourse: ['Môn & hoạt động', 'Courses & activities', 'មុខវិជ្ជា និងសកម្មភាព'],
+  addC: ['Thêm môn / hoạt động', 'Add a course / activity', 'បន្ថែមមុខវិជ្ជា / សកម្មភាព'],
+  cName: ['Tên (ví dụ: Giải tích, Đi chơi, Hẹn hò)', 'Name (e.g. Calculus, Hang out, Date)', 'ឈ្មោះ (ឧ. គណិតវិទ្យា, ទៅលេង, ណាត់ជួប)'],
+  sCourse: ['môn / hoạt động', 'courses / activities', 'មុខវិជ្ជា / សកម្មភាព'],
+  noCourse: ['Chưa có môn hay hoạt động nào.', 'No courses or activities yet.', 'មិនទាន់មានមុខវិជ្ជា ឬសកម្មភាពទេ។'],
+  needC: ['Hãy thêm ít nhất một môn hoặc hoạt động ở tab "Môn & hoạt động" trước.', 'Add at least one course or activity in the "Courses & activities" tab first.', 'សូមបន្ថែមមុខវិជ្ជា ឬសកម្មភាពមួយនៅផ្ទាំង "មុខវិជ្ជា និងសកម្មភាព" ជាមុនសិន។'],
+  delW: ['Xóa một mục sẽ xóa luôn lịch, công việc và lịch thi của mục đó.', 'Deleting an item also deletes its events, tasks and exams.', 'ការលុបធាតុមួយ នឹងលុបកាលវិភាគ កិច្ចការ និងការប្រឡងរបស់វាដែរ។'],
+
+  // Bài tập thành "Công việc"
+  tTask: ['Công việc', 'Tasks', 'កិច្ចការ'],
+  addT: ['Thêm công việc', 'Add a task', 'បន្ថែមកិច្ចការ'],
+  title: ['Tên công việc', 'Task name', 'ឈ្មោះកិច្ចការ'],
+  due: ['Hạn', 'Due date', 'ថ្ងៃកំណត់'],
+  sPend: ['việc chưa xong', 'pending tasks', 'កិច្ចការមិនទាន់ចប់'],
+  upT: ['Việc sắp tới', 'Upcoming tasks', 'កិច្ចការជិតមកដល់'],
+  noPend: ['Không còn việc nào chưa xong.', 'No pending tasks.', 'គ្មានកិច្ចការមិនទាន់ចប់ទេ។'],
+  noTask: ['Chưa có công việc nào. Thêm việc đầu tiên ở trên.', 'No tasks yet. Add your first one above.', 'មិនទាន់មានកិច្ចការទេ។ បន្ថែមកិច្ចការដំបូងខាងលើ។'],
+})
