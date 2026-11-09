@@ -6,8 +6,12 @@ export const LANG_NAMES = { vi: 'Tiếng Việt', en: 'English', km: 'ភាស�
 // Mỗi khóa: [Tiếng Việt, English, ភាសាខ្មែរ]. Thêm chuỗi mới ở đây.
 export const D={
  edit:['Sửa','Edit','កែប្រែ'],save:['Lưu','Save','រក្សាទុក'],cancel:['Hủy','Cancel','បោះបង់'],
+ tLogin:['Đăng nhập','Log in','ចូលប្រើប្រាស់'],tReg:['Đăng ký','Sign up','ចុះឈ្មោះ'],uname:['Họ và tên','Full name','ឈ្មោះពេញ'],email:['Email','Email','អ៊ីមែល'],pass:['Mật khẩu','Password','ពាក្យសម្ងាត់'],logout:['Đăng xuất','Log out','ចាកចេញ'],
+ toReg:['Chưa có tài khoản? Đăng ký','No account yet? Sign up','មិនទាន់មានគណនី? ចុះឈ្មោះ'],toLogin:['Đã có tài khoản? Đăng nhập','Already have an account? Log in','មានគណនីហើយ? ចូលប្រើប្រាស់'],loading:['Đang tải...','Loading...','កំពុងផ្ទុក...'],
+ errLogin:['Email hoặc mật khẩu không đúng.','Wrong email or password.','អ៊ីមែល ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវទេ។'],errEmail:['Email này đã được đăng ký.','This email is already registered.','អ៊ីមែលនេះត្រូវបានចុះឈ្មោះរួចហើយ។'],errShort:['Mật khẩu cần ít nhất 6 ký tự.','Password must be at least 6 characters.','ពាក្យសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួអក្សរ។'],
+ errGeneric:['Có lỗi xảy ra, vui lòng thử lại.','Something went wrong, please try again.','មានបញ្ហាកើតឡើង សូមព្យាយាមម្តងទៀត។'],errAuth:['Phiên đăng nhập đã hết hạn, hãy đăng nhập lại.','Your session expired, please log in again.','សម័យចូលប្រើបានផុតកំណត់ សូមចូលប្រើម្តងទៀត។'],errNet:['Không kết nối được máy chủ. Hãy kiểm tra backend đã chạy chưa.','Cannot reach the server. Is the backend running?','មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេបានទេ។ សូមពិនិត្យថាម៉ាស៊ីនមេកំពុងដំណើរការឬអត់។'],
  lang:['Ngôn ngữ','Language','ភាសា'],
- sub:['Quản lý môn học, thời khóa biểu, bài tập và lịch thi. Đang dùng dữ liệu mẫu, bạn có thể sửa hoặc xóa.','Manage courses, timetable, assignments and exams. Sample data is loaded; edit or delete it freely.','គ្រប់គ្រងមុខវិជ្ជា កាលវិភាគ កិច្ចការ និងការប្រឡង។ ទិន្នន័យគំរូត្រូវបានដាក់ជាមុន អ្នកអាចកែ ឬលុបបាន។'],
+ sub:['Quản lý môn học, thời khóa biểu, bài tập và lịch thi của riêng bạn.','Manage your own courses, timetable, assignments and exams.','គ្រប់គ្រងមុខវិជ្ជា កាលវិភាគ កិច្ចការ និងការប្រឡងរបស់អ្នក។'],
  tHome:['Tổng quan','Overview','ទិដ្ឋភាពទូទៅ'],tTT:['Thời khóa biểu','Timetable','កាលវិភាគសិក្សា'],tTask:['Bài tập','Assignments','កិច្ចការ'],tExam:['Lịch thi','Exams','ការប្រឡង'],tCourse:['Môn học','Courses','មុខវិជ្ជា'],
  d0:['Thứ 2','Mon','ច័ន្ទ'],d1:['Thứ 3','Tue','អង្គារ'],d2:['Thứ 4','Wed','ពុធ'],d3:['Thứ 5','Thu','ព្រហស្បតិ៍'],d4:['Thứ 6','Fri','សុក្រ'],d5:['Thứ 7','Sat','សៅរ៍'],d6:['CN','Sun','អាទិត្យ'],
  sToday:['buổi học hôm nay','classes today','ម៉ោងសិក្សាថ្ងៃនេះ'],sPend:['bài tập chưa xong','pending assignments','កិច្ចការមិនទាន់ចប់'],sExam:['kỳ thi sắp tới','upcoming exams','ការប្រឡងខាងមុខ'],sCourse:['môn học','courses','មុខវិជ្ជា'],
@@ -33,3 +37,40 @@ export const useT = () => {
   const li = useContext(LangCtx)
   return (k, n) => translate(li, k, n)
 }
+
+
+// ===== Đổi chữ để dùng cho cả việc học và việc cá nhân =====
+Object.assign(D, {
+  sub: ['Quản lý lịch học, công việc và mọi kế hoạch của riêng bạn.', 'Manage your classes, tasks and plans in one place.', 'គ្រប់គ្រងម៉ោងសិក្សា កិច្ចការ និងផែនការរបស់អ្នកនៅកន្លែងតែមួយ។'],
+
+  // Tổng quan: "Hôm nay"
+  todayT: ['Hôm nay', 'Today', 'ថ្ងៃនេះ'],
+  sToday: ['lịch hôm nay', 'events today', 'កាលវិភាគថ្ងៃនេះ'],
+  noClass: ['Hôm nay chưa có lịch nào.', 'Nothing scheduled today.', 'ថ្ងៃនេះមិនទាន់មានកាលវិភាគទេ។'],
+
+  // "Phòng" thành "Địa điểm"
+  room: ['Địa điểm', 'Location', 'ទីកន្លែង'],
+
+  // Lịch tuần
+  addS: ['Thêm lịch', 'Add an event', 'បន្ថែមកាលវិភាគ'],
+
+  // Môn học thành "Môn / hoạt động" (nhập tự do: Đi chơi, Hẹn hò, Tập gym...)
+  course: ['Môn / hoạt động', 'Course / activity', 'មុខវិជ្ជា / សកម្មភាព'],
+  tCourse: ['Môn & hoạt động', 'Courses & activities', 'មុខវិជ្ជា និងសកម្មភាព'],
+  addC: ['Thêm môn / hoạt động', 'Add a course / activity', 'បន្ថែមមុខវិជ្ជា / សកម្មភាព'],
+  cName: ['Tên (ví dụ: Giải tích, Đi chơi, Hẹn hò)', 'Name (e.g. Calculus, Hang out, Date)', 'ឈ្មោះ (ឧ. គណិតវិទ្យា, ទៅលេង, ណាត់ជួប)'],
+  sCourse: ['môn / hoạt động', 'courses / activities', 'មុខវិជ្ជា / សកម្មភាព'],
+  noCourse: ['Chưa có môn hay hoạt động nào.', 'No courses or activities yet.', 'មិនទាន់មានមុខវិជ្ជា ឬសកម្មភាពទេ។'],
+  needC: ['Hãy thêm ít nhất một môn hoặc hoạt động ở tab "Môn & hoạt động" trước.', 'Add at least one course or activity in the "Courses & activities" tab first.', 'សូមបន្ថែមមុខវិជ្ជា ឬសកម្មភាពមួយនៅផ្ទាំង "មុខវិជ្ជា និងសកម្មភាព" ជាមុនសិន។'],
+  delW: ['Xóa một mục sẽ xóa luôn lịch, công việc và lịch thi của mục đó.', 'Deleting an item also deletes its events, tasks and exams.', 'ការលុបធាតុមួយ នឹងលុបកាលវិភាគ កិច្ចការ និងការប្រឡងរបស់វាដែរ។'],
+
+  // Bài tập thành "Công việc"
+  tTask: ['Công việc', 'Tasks', 'កិច្ចការ'],
+  addT: ['Thêm công việc', 'Add a task', 'បន្ថែមកិច្ចការ'],
+  title: ['Tên công việc', 'Task name', 'ឈ្មោះកិច្ចការ'],
+  due: ['Hạn', 'Due date', 'ថ្ងៃកំណត់'],
+  sPend: ['việc chưa xong', 'pending tasks', 'កិច្ចការមិនទាន់ចប់'],
+  upT: ['Việc sắp tới', 'Upcoming tasks', 'កិច្ចការជិតមកដល់'],
+  noPend: ['Không còn việc nào chưa xong.', 'No pending tasks.', 'គ្មានកិច្ចការមិនទាន់ចប់ទេ។'],
+  noTask: ['Chưa có công việc nào. Thêm việc đầu tiên ở trên.', 'No tasks yet. Add your first one above.', 'មិនទាន់មានកិច្ចការទេ។ បន្ថែមកិច្ចការដំបូងខាងលើ។'],
+})
